@@ -51,8 +51,8 @@ a:hover { color: var(--color-ink); }
   font-family: var(--font-sans);
 }
 .site-header { min-height: 5.25rem; border-bottom: 1px solid var(--color-rule-strong); }
-.wordmark { display: inline-flex; align-items: center; gap: 0.7rem; color: var(--color-ink); font-size: 1rem; font-weight: 700; text-decoration: none; }
-.wordmark__mark { width: 1rem; height: 1.35rem; object-fit: contain; }
+.wordmark { display: inline-flex; align-items: center; text-decoration: none; }
+.wordmark img { display: block; width: 7.75rem; height: auto; }
 .site-header__meta { display: flex; align-items: center; gap: 1.25rem; color: var(--color-ink-muted); font-size: 0.75rem; letter-spacing: 0.04em; text-transform: uppercase; }
 .print-button { padding: 0.55rem 0.8rem; border: 1px solid var(--color-rule-strong); background: transparent; color: var(--color-ink); cursor: pointer; font: inherit; letter-spacing: inherit; text-transform: inherit; }
 .print-button:hover { border-color: var(--color-ink); }

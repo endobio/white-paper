@@ -1,0 +1,43 @@
+---
+interface Props {
+  title?: string;
+  tone?: 'insight' | 'evidence' | 'caution';
+}
+
+const { title = 'Key insight', tone = 'insight' } = Astro.props;
+---
+
+<aside class:list={['callout', `callout--${tone}`]} aria-label={title}>
+  <p class="callout__label">{title}</p>
+  <div class="callout__content"><slot /></div>
+</aside>
+
+<style>
+  .callout {
+    margin: 2rem 0;
+    padding: 1.25rem 1.35rem;
+    border: 1px solid var(--color-rule-strong);
+    border-left: 3px solid var(--color-accent);
+    background: var(--color-surface-soft);
+  }
+
+  .callout--evidence { border-left-color: var(--color-evidence); }
+  .callout--caution { border-left-color: var(--color-caution); }
+
+  .callout__label {
+    margin: 0 0 0.45rem;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .callout__content :global(> :first-child) { margin-top: 0; }
+  .callout__content :global(> :last-child) { margin-bottom: 0; }
+
+  @media print {
+    .callout { break-inside: avoid; background: transparent; }
+  }
+</style>

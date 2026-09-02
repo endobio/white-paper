@@ -1,0 +1,26 @@
+---
+interface Props {
+  label: string | number;
+  href: string;
+  title?: string;
+}
+
+const { label, href, title } = Astro.props;
+---
+
+<sup class="citation">
+  <a href={href} aria-label={`Reference ${label}`} title={title}>[{label}]</a>
+</sup>
+
+<style>
+  .citation { line-height: 0; }
+  .citation a {
+    margin-inline: 0.08em;
+    color: var(--color-accent-dark);
+    font-family: var(--font-sans);
+    font-size: 0.72em;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .citation a:hover { text-decoration: underline; }
+</style>

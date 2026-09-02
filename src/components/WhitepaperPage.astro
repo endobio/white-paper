@@ -1,0 +1,21 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
+import Callout from './Callout.astro';
+import Citation from './Citation.astro';
+import Equation from './Equation.astro';
+import Figure from './Figure.astro';
+import PlatformDiagram from './PlatformDiagram.astro';
+import WhitepaperLayout from '../layouts/WhitepaperLayout.astro';
+
+interface Props {
+  entry: CollectionEntry<'research'>;
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+---
+
+<WhitepaperLayout metadata={entry.data} headings={headings}>
+  <Content components={{ Callout, Citation, Equation, Figure, PlatformDiagram }} />
+</WhitepaperLayout>

@@ -1,0 +1,13 @@
+---
+import { getCollection } from 'astro:content';
+import WhitepaperPage from '../components/WhitepaperPage.astro';
+
+const papers = await getCollection('research', ({ data }) => data.status !== 'draft');
+const entry = papers.find(({ data }) => data.featured) ?? papers[0];
+
+if (!entry) {
+  throw new Error('No published research entry is available.');
+}
+---
+
+<WhitepaperPage entry={entry} />

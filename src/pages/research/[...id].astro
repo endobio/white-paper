@@ -1,0 +1,18 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
+import WhitepaperPage from '../../components/WhitepaperPage.astro';
+
+export const getStaticPaths = (async () => {
+  const papers = await getCollection('research', ({ data }) => data.status !== 'draft');
+
+  return papers.map((entry) => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
+---
+
+<WhitepaperPage entry={entry} />

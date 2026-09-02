@@ -1,0 +1,45 @@
+---
+import katex from 'katex';
+
+interface Props {
+  math: string;
+  label?: string | number;
+  inline?: boolean;
+}
+
+const { math, label, inline = false } = Astro.props;
+const markup = katex.renderToString(math, {
+  displayMode: !inline,
+  output: 'htmlAndMathml',
+  strict: 'warn',
+  throwOnError: false,
+});
+---
+
+{inline ? (
+  <span class="equation equation--inline" set:html={markup} />
+) : (
+  <figure class="equation equation--block">
+    <div class="equation__formula" set:html={markup} />
+    {label && <figcaption class="equation__label">({label})</figcaption>}
+  </figure>
+)}
+
+<style>
+  .equation--inline { white-space: nowrap; }
+  .equation--block {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0;
+    overflow-x: auto;
+  }
+  .equation__formula { min-width: max-content; }
+  .equation__label {
+    color: var(--color-ink-muted);
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+  }
+  @media print { .equation--block { break-inside: avoid; } }
+</style>

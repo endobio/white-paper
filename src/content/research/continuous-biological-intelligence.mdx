@@ -1,0 +1,83 @@
+---
+title: "Continuous Biological Intelligence"
+description: "A framework for observing molecular signals before biological change becomes visible."
+authors:
+  - "EndoBio Research"
+date: 2026-09-02
+version: "1.0"
+status: "preprint"
+featured: true
+abstract: "Biological systems are commonly managed through delayed, downstream observations. This paper introduces continuous biological intelligence: an approach that combines molecular sensing, contextual interpretation, and decision support to make earlier biological signals legible and actionable."
+---
+
+## The observation gap
+
+Agriculture observes living systems primarily through downstream measurements: visible phenotype, environmental conditions, and periodic laboratory assays. These measurements are valuable, but they often describe change after the biological system has already begun to respond.
+
+The resulting observation gap separates the moment a biological process changes from the moment that change becomes operationally visible. Closing that gap requires a measurement layer closer to the underlying biology.
+
+<Callout title="Central premise">
+  Molecular signals can precede visible phenotypic symptoms. A continuous view of those signals can expand the time available to interpret and respond.
+</Callout>
+
+### From snapshots to trajectories
+
+A sample is a point in time. A trajectory captures direction, rate, persistence, and recovery. Continuous biological intelligence treats the trajectory—not the isolated measurement—as the primary unit of interpretation.
+
+<Equation math={String.raw`I_b(t) = f\!\left(M_{0:t}, E_{0:t}, C\right)`} label="1" />
+
+Here, biological intelligence at time t is modeled as a function of the history of molecular observations, environmental context, and biological context. The equation is intentionally general: the framework is defined by the relationship between measurement, context, and action rather than by a single sensing modality or model.
+
+## A continuous intelligence loop
+
+The proposed system joins three capabilities into a repeating loop. Molecular sensing observes changes close to the biological process. Signal interpretation distinguishes meaningful trajectories from normal variation. Decision support translates the result into an operational window.
+
+<Figure caption="The continuous biological intelligence loop connects molecular observation to contextual interpretation and earlier decision support.">
+  <PlatformDiagram />
+</Figure>
+
+### Molecular sensing
+
+The sensing layer should be evaluated on biological specificity, temporal resolution, stability, and deployability. A useful signal must be measurable in the operating environment and interpretable against an appropriate baseline.
+
+### Contextual interpretation
+
+Biological signals do not exist in isolation. Developmental stage, genetics, environment, management history, and interacting organisms can all alter their meaning. Interpretation therefore requires models that preserve context and quantify uncertainty rather than collapsing observations into a context-free threshold.
+
+### Decision support
+
+An earlier signal is valuable only when it changes a decision. The system must connect biological evidence to the timing, confidence, and reversibility of an intervention. Outputs should expose both the recommendation and the evidence supporting it.
+
+<Callout title="Design principle" tone="evidence">
+  The objective is not simply earlier detection. It is earlier, better-grounded action with an explicit account of uncertainty.
+</Callout>
+
+## System requirements
+
+A practical biological intelligence platform should satisfy five requirements:
+
+1. **Continuity.** Measurements form comparable time series rather than disconnected snapshots.
+2. **Biological proximity.** Signals relate directly to the process being inferred.
+3. **Context awareness.** Interpretation incorporates environmental and biological state.
+4. **Operational clarity.** Outputs map to decisions, windows, and confidence.
+5. **Traceability.** Claims can be followed from recommendation back to evidence.
+
+These requirements create a common evaluation framework for sensors, models, and applications. They also keep the architecture modular: improvements to one layer can be assessed by how they strengthen the end-to-end decision loop.
+
+## Implications
+
+Continuous biological intelligence shifts the management model from observing outcomes to interpreting processes. In agriculture, that shift could support earlier stress detection, more precise intervention timing, and stronger feedback between biological response and management.
+
+The framework also changes how evidence accumulates. Each deployment can generate longitudinal observations that refine baselines, reveal response patterns, and improve the next decision. The platform becomes more useful not because it collects more data in the abstract, but because it builds a better account of how biological systems change over time.
+
+## Conclusion
+
+The central opportunity is to make biology observable at the timescale on which decisions are made. By integrating molecular sensing, contextual interpretation, and decision support, continuous biological intelligence offers a path from delayed phenotypic observation toward an earlier and more legible view of living systems.
+
+---
+
+## References
+
+<ol class="references">
+  <li id="ref-1">EndoBio Research. <em>Continuous Biological Intelligence</em>. Version 1.0, 2026.</li>
+</ol>

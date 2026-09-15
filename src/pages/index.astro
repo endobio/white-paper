@@ -1,13 +1,113 @@
 ---
 import { getCollection } from 'astro:content';
-import WhitepaperPage from '../components/WhitepaperPage.astro';
+import '../styles/global.css';
 
 const papers = await getCollection('research', ({ data }) => data.status !== 'draft');
-const entry = papers.find(({ data }) => data.featured) ?? papers[0];
+papers.sort((a, b) => Number(b.data.featured) - Number(a.data.featured)
+  || b.data.date.getTime() - a.data.date.getTime()
+  || a.data.title.localeCompare(b.data.title));
 
-if (!entry) {
-  throw new Error('No published research entry is available.');
-}
+const home = import.meta.env.BASE_URL;
+const title = 'White papers — EndoBio';
+const description = 'Explore EndoBio white papers, research, and perspectives on biological intelligence.';
+const canonical = new URL(home, Astro.site);
+const formatDate = (date: Date) => date.toLocaleDateString('en-CA', {
+  year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC',
+});
 ---
 
-<WhitepaperPage entry={entry} />
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f5f3ec" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href={`${home}endobio-logo.svg`} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#papers">Skip to white papers</a>
+    <header class="site-header">
+      <a class="wordmark" href={home} aria-label="EndoBio white papers home">
+        <img src={`${home}endobio.svg`} alt="EndoBio" />
+      </a>
+      <nav class="site-header__meta" aria-label="Main navigation">
+        <a href="#papers">Browse papers</a>
+      </nav>
+    </header>
+
+    <main class="library" id="papers">
+      <header class="library-header">
+        <p class="paper-header__eyebrow">EndoBio Research</p>
+        <h1>White papers</h1>
+        <p>Research and perspectives on biological intelligence.<br />Explore the ideas behind our work.</p>
+      </header>
+
+      <div class="library-label">
+        <h2>All publications</h2>
+        <span>{papers.length} {papers.length === 1 ? 'paper' : 'papers'}</span>
+      </div>
+      {papers.length > 0 ? (
+        <nav aria-label="White papers">
+          <ul class="paper-list">
+            {papers.map(({ id, data }) => (
+              <li>
+                <a class="paper-card" href={`${home}research/${id}/`}>
+                  <div class="paper-card__meta">
+                    <span>{data.status}</span>
+                    {data.featured && <span class="featured">Featured</span>}
+                    <time datetime={data.date.toISOString()}>{formatDate(data.date)}</time>
+                  </div>
+                  <h3>{data.title}</h3>
+                  <p class="paper-card__description">{data.description}</p>
+                  <div class="paper-card__footer">
+                    <span>{data.authors.join(', ')} · Version {data.version}</span>
+                    <span class="paper-card__cta">Read paper <span aria-hidden="true">↗</span></span>
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ) : <p class="empty-state">New white papers are on the way. Check back soon for our latest research.</p>}
+    </main>
+
+    <footer class="site-footer">
+      <span>© {new Date().getUTCFullYear()} EndoBio</span>
+      <span>Research publications</span>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .library { width: min(100% - 3rem, 68rem); margin: 0 auto; padding: clamp(3rem, 8vw, 7rem) 0; min-height: calc(100vh - 10.25rem); }
+  .library-header { margin-bottom: 4rem; }
+  h1 { margin: 0; font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 500; line-height: 1.05; letter-spacing: -0.055em; }
+  .library-header > p:last-child { color: var(--color-ink-muted); font-size: 1.25rem; margin: 1.5rem 0 0; }
+  .library-label { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding-bottom: 1rem; font-family: var(--font-sans); border-bottom: 1px solid var(--color-ink); }
+  .library-label h2 { margin: 0; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; }
+  .library-label > span { color: var(--color-ink-muted); font-size: 0.8rem; }
+  .paper-list { list-style: none; padding: 0; margin: 0; }
+  .paper-card { display: block; padding: 2.5rem 1.5rem; border-bottom: 1px solid var(--color-rule-strong); text-decoration: none; color: var(--color-ink); overflow-wrap: anywhere; }
+  .paper-card:hover { background: var(--color-surface); }
+  .paper-card:focus-visible { outline: 2px solid var(--color-accent-dark); outline-offset: 3px; }
+  .paper-card__meta { display: flex; align-items: center; flex-wrap: wrap; gap: 0.75rem 1.25rem; font-family: var(--font-sans); color: var(--color-ink-muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  .featured { color: var(--color-accent-dark); background: var(--color-surface-soft); padding: 0.2rem 0.5rem; }
+  h3 { max-width: 30ch; margin: 1rem 0; font-size: clamp(1.8rem, 4vw, 2.7rem); font-weight: 500; letter-spacing: -0.035em; line-height: 1.15; text-wrap: balance; }
+  .paper-card__description { max-width: 48rem; color: var(--color-ink-muted); margin: 0 0 1.75rem; font-size: 1.1rem; }
+  .paper-card__footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; font-family: var(--font-sans); font-size: 0.8rem; color: var(--color-ink-muted); }
+  .paper-card__cta { color: var(--color-accent-dark); font-weight: 600; }
+  .empty-state { padding: 2rem 0; color: var(--color-ink-muted); }
+  @media (max-width: 760px) {
+    .library { width: calc(100% - 2rem); }
+    .paper-card { padding: 2rem 0; }
+  }
+</style>

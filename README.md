@@ -8,7 +8,7 @@ Requires Node.js 22.12 or newer.
 
 ```sh
 npm install
-npm run dev
+npm run dev -- --background
 ```
 
 The production checks are:
@@ -36,7 +36,9 @@ abstract: "The paper abstract."
 ---
 ```
 
-Papers are automatically wrapped in `WhitepaperLayout`, which supplies the publication header, metadata, abstract, table of contents, reading layout, SEO metadata, responsive styles, and print/PDF styles. A `featured: true` paper appears at the site root. Non-draft papers are also published under `/research/<filename>/`.
+The site root is a white paper navigator. Every non-draft paper appears automatically with its title, description, authors, date, version, and status. Featured papers appear first, followed by newest date, then title. Drafts are excluded from both the navigator and generated paper pages.
+
+Papers are automatically wrapped in `WhitepaperLayout`, which supplies the publication header, metadata, abstract, table of contents, reading layout, SEO metadata, responsive styles, and print/PDF styles. Each paper is published under `/research/<filename>/` relative to the site base (`/white-paper/` in production), with an **All white papers** link back to the navigator. To publish another paper, add an `.md` or `.mdx` file with the frontmatter above and set its status to `preprint` or `published`; no page or navigation edits are needed.
 
 The following components are available directly in MDX without imports:
 
